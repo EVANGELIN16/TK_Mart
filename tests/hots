@@ -1,0 +1,8 @@
+import { test, expect } from "@playwright/test";
+
+test("products page visual snapshot", async ({ page }) => {
+  await page.goto("http://localhost:5173/products");
+  await page.waitForSelector("img");
+
+  expect(await page.screenshot()).toMatchSnapshot("products-page.png");
+});

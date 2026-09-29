@@ -1,9 +1,7 @@
-import React from 'react';
+import PropTypes from 'prop-types'
 
-import PropTypes from 'prop-types';
-
-import { Button } from './Button';
-import './header.css';
+import { Button } from './Button'
+import './header.css'
 
 export const Header = ({ user = null, onLogin, onLogout, onCreateAccount }) => (
   <header>
@@ -44,13 +42,13 @@ export const Header = ({ user = null, onLogin, onLogout, onCreateAccount }) => (
       </div>
     </div>
   </header>
-);
+)
 
 Header.propTypes = {
   user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }),
   onLogin: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
-  onCreateAccount: PropTypes.func.isRequired,
-};
+  onCreateAccount: PropTypes.func.isRequired
+}

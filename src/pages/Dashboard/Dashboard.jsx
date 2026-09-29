@@ -1,27 +1,23 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../store/productSlice";
-import { Link } from "react-router-dom";
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from '../../store/productSlice'
+import { Link } from 'react-router-dom'
 
 export default function Dashboard() {
-  const dispatch = useDispatch();
-  const { items, loading } = useSelector((state) => state.products);
-
+  const dispatch = useDispatch()
+  const { items } = useSelector((state) => state.products)
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts())
+  }, [dispatch])
 
-  const categories = [...new Set(items.map((p) => p.category))];
-  const recentProducts = items.slice(0, 6);
-  const lowStock = items.filter((p) => p.stock < 20).slice(0, 6);
+  const categories = [...new Set(items.map((p) => p.category))]
+  const recentProducts = items.slice(0, 6)
+  const lowStock = items.filter((p) => p.stock < 20).slice(0, 6)
 
   return (
     <div className="p-10 space-y-12">
-
       {/* Title */}
-      <h1 className="text-5xl font-bold text-gray-900">
-        TK Mart Dashboard
-      </h1>
+      <h1 className="text-5xl font-bold text-gray-900">TK Mart Dashboard</h1>
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -138,5 +134,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }

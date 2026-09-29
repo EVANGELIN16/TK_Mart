@@ -1,22 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const wishlistSlice = createSlice({
-  name: "wishlist",
+  name: 'wishlist',
   initialState: {
-    items: [], // product IDs
+    items: [] // product IDs
   },
   reducers: {
     toggleWishlist: (state, action) => {
-      const id = action.payload;
+      const id = action.payload
 
       if (state.items.includes(id)) {
-        state.items = state.items.filter((p) => p !== id);
+        state.items = state.items.filter((p) => p !== id)
       } else {
-        state.items.push(id);
+        state.items.push(id)
       }
-    },
-  },
-});
+    }
+  }
+})
 
-export const { toggleWishlist } = wishlistSlice.actions;
-export default wishlistSlice.reducer;
+export const { toggleWishlist } = wishlistSlice.actions
+export default wishlistSlice.reducer

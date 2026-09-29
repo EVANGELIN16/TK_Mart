@@ -3,7 +3,7 @@ import { api } from './client'
 // Get all products
 export const getProducts = async () => {
   const res = await api.get('/products')
-  return res.data.products;
+  return res.data.products
 }
 
 // Get single product

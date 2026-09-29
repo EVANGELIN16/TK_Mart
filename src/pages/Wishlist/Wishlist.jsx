@@ -1,25 +1,20 @@
-import GlassCard from "../../components/Card/Card";
-import { useSelector, useDispatch } from "react-redux";
-import { toggleWishlist } from "../../store/wishlistSlice";
-import { Link } from "react-router-dom";
+import GlassCard from '../../components/Card/Card'
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleWishlist } from '../../store/wishlistSlice'
+import { Link } from 'react-router-dom'
 
 export default function Wishlist() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const wishlist = useSelector((state) => state.wishlist.items);
-  const products = useSelector((state) => state.products.items);
+  const wishlist = useSelector((state) => state.wishlist.items)
+  const products = useSelector((state) => state.products.items)
 
-  const wishlistedProducts = products.filter((p) =>
-    wishlist.includes(p.id)
-  );
+  const wishlistedProducts = products.filter((p) => wishlist.includes(p.id))
 
   return (
     <div className="p-10 space-y-10">
-
       {/* Title */}
-      <h1 className="text-4xl font-bold text-gray-900 mb-6">
-        Your Wishlist
-      </h1>
+      <h1 className="text-4xl font-bold text-gray-900 mb-6">Your Wishlist</h1>
 
       {/* Empty State */}
       {wishlistedProducts.length === 0 && (
@@ -42,11 +37,11 @@ export default function Wishlist() {
             showRemove={false}
             onWishlistToggle={{
               isWishlisted: true,
-              toggle: (id) => dispatch(toggleWishlist(id)),
+              toggle: (id) => dispatch(toggleWishlist(id))
             }}
           />
         ))}
       </div>
     </div>
-  );
+  )
 }

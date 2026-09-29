@@ -1,61 +1,47 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../store/productSlice";
-import GlassCard from "../../components/Card/Card";
-import { toggleWishlist } from "../../store/wishlistSlice";
-import { addToCart } from "../../store/cartSlice";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from '../../store/productSlice'
+import GlassCard from '../../components/Card/Card'
+import { toggleWishlist } from '../../store/wishlistSlice'
+import { addToCart } from '../../store/cartSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function Products() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const { items, loading } = useSelector((state) => state.products);
-  const wishlist = useSelector((state) => state.wishlist.items);
+  const { items, loading } = useSelector((state) => state.products)
+  const wishlist = useSelector((state) => state.wishlist.items)
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("all");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
+  const [search, setSearch] = useState('')
+  const [category, setCategory] = useState('all')
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts())
+  }, [dispatch])
 
-  if (loading)
-    return (
-      <p className="p-10 text-xl text-gray-700">
-        Loading products...
-      </p>
-    );
+  if (loading) return <p className="p-10 text-xl text-gray-700">Loading products...</p>
 
-  const categories = ["all", ...new Set(items.map((p) => p.category))];
+  const categories = ['all', ...new Set(items.map((p) => p.category))]
 
   const filteredProducts = items.filter((p) => {
-    const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === "all" ? true : p.category === category;
-    const matchesMinPrice = minPrice === "" ? true : p.price >= Number(minPrice);
-    const matchesMaxPrice = maxPrice === "" ? true : p.price <= Number(maxPrice);
+    const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase())
+    const matchesCategory = category === 'all' ? true : p.category === category
+    const matchesMinPrice = minPrice === '' ? true : p.price >= Number(minPrice)
+    const matchesMaxPrice = maxPrice === '' ? true : p.price <= Number(maxPrice)
 
-    return (
-      matchesSearch &&
-      matchesCategory &&
-      matchesMinPrice &&
-      matchesMaxPrice
-    );
-  });
+    return matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice
+  })
 
   return (
     <div className="p-10 space-y-10">
-
       {/* Title */}
-      <h1 className="text-4xl font-bold text-gray-900 mb-6">
-        Products
-      </h1>
+      <h1 className="text-4xl font-bold text-gray-900 mb-6">Products</h1>
 
       {/* FILTERS */}
       <div className="mb-10 grid grid-cols-1 md:grid-cols-4 gap-6">
-
         {/* Search */}
         <input
           type="text"
@@ -100,7 +86,7 @@ export default function Products() {
       {/* PRODUCTS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {filteredProducts.map((product) => {
-          const isWishlisted = wishlist.includes(product.id);
+          const isWishlisted = wishlist.includes(product.id)
 
           return (
             <GlassCard
@@ -110,14 +96,14 @@ export default function Products() {
               showAddToCart={true}
               onWishlistToggle={{
                 isWishlisted,
-                toggle: (id) => dispatch(toggleWishlist(id)),
+                toggle: (id) => dispatch(toggleWishlist(id))
               }}
               onAddToCart={(product) => {
-                dispatch(addToCart(product));
-                navigate("/cart");
+                dispatch(addToCart(product))
+                navigate('/cart')
               }}
             />
-          );
+          )
         })}
       </div>
 
@@ -128,5 +114,5 @@ export default function Products() {
         </p>
       )}
     </div>
-  );
+  )
 }

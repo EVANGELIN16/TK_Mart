@@ -5,13 +5,13 @@ const links = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
   { to: '/products', label: 'Products', icon: Package },
   { to: '/wishlist', label: 'Wishlist', icon: Heart },
-  { to: '/cart', label: 'Cart', icon: ShoppingCart },
+  { to: '/cart', label: 'Cart', icon: ShoppingCart }
 ]
 
 export default function Navbar({ cartCount = 0 }) {
   return (
-<nav className="backdrop-blur-xl bg-white/30 border-b border-white/20 shadow-lg px-8 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50">
-    <h1 className="text-2xl font-bold text-white drop-shadow-lg"> Tk Mart</h1>
+    <nav className="backdrop-blur-xl bg-white/30 border-b border-white/20 shadow-lg px-8 py-4 flex items-center justify-between fixed top-0 left-0 right-0 z-50">
+      <h1 className="text-2xl font-bold text-white drop-shadow-lg"> Tk Mart</h1>
 
       <div className="flex items-center gap-6 text-slate-700 font-medium">
         {links.map(({ to, label, icon: Icon, end }) => (
@@ -21,9 +21,7 @@ export default function Navbar({ cartCount = 0 }) {
             end={end}
             className={({ isActive }) =>
               `relative flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                isActive
-                  ? 'text-indigo-600'
-                  : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50'
+                isActive ? 'text-indigo-600' : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50'
               }`
             }
           >
@@ -41,7 +39,8 @@ export default function Navbar({ cartCount = 0 }) {
                 {isActive && (
                   <span className="absolute inset-x-3 -bottom-[13px] h-[2px] rounded-full bg-indigo-600" />
                 )}
-              </>            )}
+              </>
+            )}
           </NavLink>
         ))}
       </div>

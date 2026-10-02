@@ -4,11 +4,9 @@ import { fetchProducts } from '../../store/productSlice'
 import GlassCard from '../../components/Card/Card'
 import { toggleWishlist } from '../../store/wishlistSlice'
 import { addToCart } from '../../store/cartSlice'
-import { useNavigate } from 'react-router-dom'
 
 export default function Products() {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const { items, loading } = useSelector((state) => state.products)
   const wishlist = useSelector((state) => state.wishlist.items)
@@ -17,6 +15,8 @@ export default function Products() {
   const [category, setCategory] = useState('all')
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
+
+  const [notification, setNotification] = useState('')
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -35,8 +35,20 @@ export default function Products() {
     return matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice
   })
 
+  const showNotification = (message) => {
+    setNotification(message)
+
+    setTimeout(() => {
+      setNotification('')
+    }, 2000)
+  }
   return (
     <div className="p-10 space-y-10">
+      {notification && (
+        <div className="fixed top-24 right-6 z-50 bg-gray-900 text-white px-6 py-3 rounded-xl shadow-lg">
+          {notification}
+        </div>
+      )}
       {/* Title */}
       <h1 className="text-4xl font-bold text-gray-900 mb-6">Products</h1>
 
@@ -96,11 +108,19 @@ export default function Products() {
               showAddToCart={true}
               onWishlistToggle={{
                 isWishlisted,
-                toggle: (id) => dispatch(toggleWishlist(id))
+                toggle: (id) => {
+                  dispatch(toggleWishlist(id))
+
+                  if (isWishlisted) {
+                    showNotification('Removed from wishlist')
+                  } else {
+                    showNotification('Added to wishlist ✓')
+                  }
+                }
               }}
               onAddToCart={(product) => {
                 dispatch(addToCart(product))
-                navigate('/cart')
+                showNotification('Added to cart ✓')
               }}
             />
           )

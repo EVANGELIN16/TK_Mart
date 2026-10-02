@@ -5,6 +5,8 @@ import ProductDetails from './pages/ProductDetails/Productdetails'
 import Wishlist from './pages/Wishlist/Wishlist'
 import Cart from './pages/Cart/Cart'
 import Navbar from './components/Navbar/Navbar'
+import Register from './pages/Register/Register'
+import Login from './pages/Login/Login'
 
 export default function App() {
   return (
@@ -13,7 +15,9 @@ export default function App() {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/products" element={<Products />} />
           <Route path="/wishlist" element={<Wishlist />} />

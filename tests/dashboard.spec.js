@@ -10,6 +10,6 @@ test('stats boxes appear', async ({ page }) => {
   await page.goto('http://localhost:5173')
 
   await expect(page.getByText('Total Products')).toBeVisible()
-  await expect(page.getByText('Categories')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Categories', exact: true })).toBeVisible()
   await expect(page.getByText('Inventory Value')).toBeVisible()
 })

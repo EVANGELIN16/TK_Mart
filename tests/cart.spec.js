@@ -3,43 +3,62 @@ import { test, expect } from '@playwright/test'
 test('add to cart works', async ({ page }) => {
   await page.goto('http://localhost:5173/products')
 
-  await page.waitForSelector('img')
+  // Wait for products to load
+  const addToCartButton = page.getByRole('button', { name: 'Add to Cart' }).first()
+  await expect(addToCartButton).toBeVisible({ timeout: 30000 })
 
-  await page.getByText('Add to Cart').first().click()
+  // Add first product to cart
+  await addToCartButton.click()
 
-  await page.goto('http://localhost:5173/cart')
+  // Products page automatically navigates to cart
+  await expect(page).toHaveURL(/\/cart/)
 
+  // Cart page should load
   await expect(page.getByRole('heading', { name: 'Shopping Basket' })).toBeVisible()
-  await expect(page.getByText('£')).toBeVisible()
+
+  // Cart should contain a product image
+  await expect(page.locator('img').first()).toBeVisible()
+
+  // Subtotal should appear
+  await expect(page.getByRole('heading', { name: /Subtotal/ })).toBeVisible()
 })
 
 test('increase and decrease quantity', async ({ page }) => {
   await page.goto('http://localhost:5173/products')
 
-  await page.waitForSelector('img')
+  const addToCartButton = page.getByRole('button', { name: 'Add to Cart' }).first()
+  await expect(addToCartButton).toBeVisible({ timeout: 30000 })
 
-  await page.getByText('Add to Cart').first().click()
-  await page.goto('http://localhost:5173/cart')
+  await addToCartButton.click()
 
-  const qty = page.locator('text=1')
-  await expect(qty).toBeVisible()
+  await expect(page).toHaveURL(/\/cart/)
 
-  await page.getByText('+').click()
-  await expect(page.locator('text=2')).toBeVisible()
+  // Quantity starts at 1
+  const quantity = page.locator('span.text-xl.font-semibold').first()
+  await expect(quantity).toHaveText('1')
 
-  await page.getByText('-').click()
-  await expect(page.locator('text=1')).toBeVisible()
+  // Increase quantity
+  await page.getByRole('button', { name: '+' }).click()
+  await expect(quantity).toHaveText('2')
+
+  // Decrease quantity
+  await page.getByRole('button', { name: '-' }).click()
+  await expect(quantity).toHaveText('1')
 })
 
 test('remove from cart works', async ({ page }) => {
   await page.goto('http://localhost:5173/products')
 
-  await page.waitForSelector('img')
+  const addToCartButton = page.getByRole('button', { name: 'Add to Cart' }).first()
+  await expect(addToCartButton).toBeVisible({ timeout: 30000 })
 
-  await page.getByText('Add to Cart').first().click()
-  await page.goto('http://localhost:5173/cart')
+  await addToCartButton.click()
 
-  await page.getByText('Delete').click()
+  await expect(page).toHaveURL(/\/cart/)
 
-  await expect(page.getByText('Your cart is empty.')).toBeVisible()
+  // Remove product
+  await page.getByRole('button', { name: 'Delete' }).click()
+
+  // Cart should now be empty
+  await expect(page.getByText('Your cart is empty.', { exact: true })).toBeVisible()
 })

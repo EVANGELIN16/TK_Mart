@@ -2,19 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tk-mart
+
 spec:
   replicas: 2
+
   selector:
     matchLabels:
       app: tk-mart
+
   template:
     metadata:
       labels:
         app: tk-mart
+
     spec:
       containers:
         - name: tk-mart
-          image: tk_mart-tk-mart:latest
-          imagePullPolicy: Never
+          image: shamona/tk-mart:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

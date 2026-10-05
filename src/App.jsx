@@ -17,7 +17,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/products" element={<Products />} />
           <Route path="/wishlist" element={<Wishlist />} />

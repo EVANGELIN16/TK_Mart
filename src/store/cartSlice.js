@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { saveCart } from '../api/cart'
 
 const cartSlice = createSlice({
   name: 'cart',
+
   initialState: {
     items: []
   },
@@ -21,13 +21,10 @@ const cartSlice = createSlice({
           qty: 1
         })
       }
-
-      saveCart(state.items)
     },
 
     removeFromCart: (state, action) => {
       state.items = state.items.filter((i) => i.id !== action.payload)
-      saveCart(state.items)
     },
 
     updateQuantity: (state, action) => {
@@ -37,30 +34,22 @@ const cartSlice = createSlice({
       if (item) {
         item.qty = quantity
       }
-
-      saveCart(state.items)
     },
 
     increaseQty: (state, action) => {
-      const id = action.payload
-      const item = state.items.find((item) => item.id === id)
+      const item = state.items.find((i) => i.id === action.payload)
 
       if (item) {
         item.qty += 1
       }
-
-      saveCart(state.items)
     },
 
     decreaseQty: (state, action) => {
-      const id = action.payload
-      const item = state.items.find((item) => item.id === id)
+      const item = state.items.find((i) => i.id === action.payload)
 
       if (item && item.qty > 1) {
         item.qty -= 1
       }
-
-      saveCart(state.items)
     }
   }
 })

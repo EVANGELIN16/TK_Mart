@@ -4,6 +4,7 @@ import Products from './pages/Products/Products'
 import ProductDetails from './pages/ProductDetails/Productdetails'
 import Wishlist from './pages/Wishlist/Wishlist'
 import Cart from './pages/Cart/Cart'
+import Checkout from './pages/Checkout/Checkout'
 import Navbar from './components/Navbar/Navbar'
 import Register from './pages/Register/Register'
 import Login from './pages/Login/Login'
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </div>

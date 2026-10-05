@@ -19,4 +19,7 @@ const wishlistSlice = createSlice({
 })
 
 export const { toggleWishlist } = wishlistSlice.actions
+export const selectWishlistItems = (state) => state.wishlist.items
+
+export const selectIsWishlisted = (state, productId) => state.wishlist.items.includes(productId)
 export default wishlistSlice.reducer

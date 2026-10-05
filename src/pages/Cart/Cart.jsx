@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromCart, increaseQty, decreaseQty } from '../../store/cartSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function Cart() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const items = useSelector((state) => state.cart.items)
 
   const total = items.reduce((sum, item) => sum + Number(item.price) * item.qty, 0)
@@ -85,7 +87,10 @@ export default function Cart() {
 
           <p className="text-3xl font-bold text-gray-900 mb-6">£{total.toFixed(2)}</p>
 
-          <button className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-black transition">
+          <button
+            onClick={() => navigate('/checkout')}
+            className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-black transition"
+          >
             Proceed to Checkout
           </button>
         </div>

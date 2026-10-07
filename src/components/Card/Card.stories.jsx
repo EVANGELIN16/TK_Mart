@@ -1,8 +1,16 @@
+import { MemoryRouter } from 'react-router-dom'
 import GlassCard from './Card'
 
 export default {
   title: 'Components/GlassCard',
-  component: GlassCard
+  component: GlassCard,
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    )
+  ]
 }
 
 const sampleProduct = {
@@ -17,7 +25,10 @@ export const Default = () => (
     product={sampleProduct}
     showWishlist={true}
     showAddToCart={true}
-    onWishlistToggle={{ isWishlisted: false, toggle: () => {} }}
+    onWishlistToggle={{
+      isWishlisted: false,
+      toggle: () => {}
+    }}
     onAddToCart={() => {}}
   />
 )

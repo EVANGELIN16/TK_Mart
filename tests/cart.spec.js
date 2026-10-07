@@ -91,3 +91,40 @@ test('remove from cart works', async ({ page }) => {
 
   await expect(page.getByText('Your cart is empty.', { exact: true })).toBeVisible()
 })
+test('complete checkout demo flow', async ({ page }) => {
+  await page.goto('http://localhost:5173/products')
+
+  const addToCartButton = page
+    .getByRole('button', {
+      name: 'Add to Cart'
+    })
+    .first()
+
+  await expect(addToCartButton).toBeVisible()
+  await addToCartButton.click()
+
+  await expect(page.getByText('Added to cart ✓')).toBeVisible()
+
+  await page.getByRole('link', { name: 'Cart', exact: true }).click()
+
+  await expect(page).toHaveURL(/\/cart/)
+
+  await page.getByRole('button', { name: 'Proceed to Checkout' }).click()
+
+  await expect(page).toHaveURL(/\/checkout/)
+  await expect(page.getByRole('heading', { name: 'Checkout' })).toBeVisible()
+
+  await page.getByLabel('Full Name').fill('Test User')
+  await page.getByLabel('Address').fill('10 Test Street')
+  await page.getByLabel('Postcode').fill('AB1 2CD')
+
+  await page.getByRole('button', { name: 'Place Order' }).click()
+
+  await expect(page.getByRole('heading', { name: 'Order simulation complete!' })).toBeVisible()
+
+  await expect(
+    page.getByText(
+      'This is a demo e-commerce project. No real payment or order has been processed.'
+    )
+  ).toBeVisible()
+})

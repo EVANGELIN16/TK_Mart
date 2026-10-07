@@ -147,7 +147,7 @@ export default function Register() {
 
         <p className="text-center text-gray-600 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold underline">
+          <Link to="/" className="font-semibold underline">
             Login
           </Link>
         </p>
